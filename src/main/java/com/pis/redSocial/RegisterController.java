@@ -132,6 +132,8 @@ public class RegisterController {
 									false, amigos,peticiones,peticionesenviadas);
 									p.setFecha(new Date());
 							dao.crearPersona(p);
+							request.getSession().setAttribute("persona", p);
+							request.getSession().setAttribute("usernombre", p.getNombre());
 							return new ModelAndView("home", "aviso", "Cuenta creada correctamente");
 							
 						} else
