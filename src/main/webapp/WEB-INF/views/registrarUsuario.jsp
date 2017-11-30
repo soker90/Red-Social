@@ -195,6 +195,13 @@
         </nav>
 
     </div>
+    <%
+		HttpSession sesion = request.getSession();
+		Persona p= (Persona)sesion.getAttribute("persona");
+		if(p!=null){
+			response.sendRedirect("menu");
+		}
+	%>
 	
 	<script language="JavaScript" type="text/javascript">
 		if ("${mensaje}" != "") {
