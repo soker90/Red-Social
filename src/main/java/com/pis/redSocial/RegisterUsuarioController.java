@@ -122,9 +122,7 @@ public class RegisterUsuarioController {
 							//CREA USUARIO
 							p = new Persona(nombre, apellidos, username, email, password, direccion, telefono, foto, false, amigos,peticiones,peticionesenviadas);
 							dao.crearPersona(p);
-							request.getSession().setAttribute("persona", p);
-							request.getSession().setAttribute("usernombre", p.getNombre());
-							return new ModelAndView("registrarUsuario", "aviso", "Cuenta creada correctamente");
+							return new ModelAndView("registrarUsuario", "mensaje", "Cuenta creada correctamente");
 					}
 				}
 			}
