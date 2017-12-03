@@ -159,6 +159,7 @@
 							</div>
 						</c:when>
 						<c:otherwise>
+						<c:if test="${listValue.getUsername() ne persona.getUsername()}">
 							<div id="panelUsuario-${listValue.getUsername()}" class="mensaje"
 								style="margin-top: 10px; height: 100px; width: 100%">
 								<div id="usuario-${listValue.getUsername()}"
@@ -173,6 +174,7 @@
 										name="anadir-${listValue.getUsername()}">Añadir</button>
 								</form>
 							</div>
+						</c:if>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>

@@ -170,7 +170,7 @@
 				<p
 					style="align-content: center; margin: auto; display: table; font-size: 20px; color: grey;">Registro</p>
 				<!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
-				<form action="crearUsuario" method="post" class="form-signin"
+				<form role="form" action="crearUsuario" method="post" class="form-signin"
 					name="form1">
 					<span id="reauth-email" class="reauth-email"></span> <input
 						type="text" name="inputNombreRegistro" class="form-control"
@@ -198,7 +198,7 @@
 						type="file" name="inputFotoRegistro" accept="image/*" required> -->
 					<div id="remember" class="checkbox"></div>
 					<button id="btnSignup"
-						class="btn btn-lg btn-primary btn-block btn-signin" type="submit"
+						class="btn btn-lg btn-primary btn-block btn-signin" type="submit" value="submit"
 						onclick="validarFormularios()">Sign up</button>
 				</form>
 				<!--  

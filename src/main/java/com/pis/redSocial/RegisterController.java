@@ -134,7 +134,7 @@ public class RegisterController {
 							dao.crearPersona(p);
 							request.getSession().setAttribute("persona", p);
 							request.getSession().setAttribute("usernombre", p.getNombre());
-							return new ModelAndView("home", "aviso", "Cuenta creada correctamente");
+							return new ModelAndView("menu", "aviso", "Cuenta creada correctamente");
 							
 						} else
 							miMAV.addObject("mensaje",
