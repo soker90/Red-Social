@@ -16,6 +16,67 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"
 	rel="stylesheet" media="screen">
 </head>
+<body >
+	<%@ page import="modelo.Persona" %>
+	<%
+		HttpSession sesion = request.getSession();
+		Persona p= (Persona)sesion.getAttribute("persona");
+		if(p==null){
+			response.sendRedirect("home.jsp");
+		}
+	%>
+    <div id="navBar">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a href="init" class="navbar-brand" >Intravita</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li id="liPublicacion" ><a id="aPublicacion" >Publicaciones</a></li>
+                    <li id="liAmistad" class="active"><a id="aAmistad" >Amigos</a></li>
+                    <li id="liMP"><a id="aMP" >Gente</a></li>
+                    <c:if test = "${persona.isEsAdmin() == true}">
+                    <li id="liTodasPublicaciones"><a id="aTodasPublicaciones" >Todas Publicaciones</a></li>
+                    <li id="liPanel" ><a id="aPanel"> Panel</a></li>
+                    <li id="liRegistroUser"><a id="aRegistroUser" >Registra Usuario</a></li>
+                    </c:if>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="liPerfil"><a id="aPerfil" ><span class="glyphicon glyphicon-user"></span> Perfil</a></li>
+                    <li id="liLogout"><a id="aLogout" href="exit"><span href="exit" class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+
+    </div>
+        <!--  PANEL BOTONES INVISIBLES ;D -->
+    <div id="divBotonesInvisibles" style="display:none">
+    	<form action="amigos" method="get">
+            <button  id="holaAmigos" style="display:none; padding-bottom:10px; float: right;margin: auto;" class="btn btn-warning" type="submit" value="Amigos" name="amigos" >Volver</button>
+        </form>
+        <form action="gente" method="get">
+            <button  id="holaGente" style="display:none; padding-bottom:10px; float: right;margin: auto;" class="btn btn-warning" type="submit" value="Gente" name="Gente" >Volver</button>
+        </form>
+    	<form action="menu" method="get">
+            <button  id="holaMenu" style="display:none; padding-bottom:10px; float: right;margin: auto;" class="btn btn-warning" type="submit" value="Menu" name="menu" >Volver</button>
+        </form>
+        <form action="perfil" method="get">
+            <button  id="holaPerfil" style="display:none; padding-bottom:10px; float: right;margin: auto;" class="btn btn-warning" type="submit" value="Perfil" name="perfil" >Volver</button>
+        </form>
+    	<form action="todasPublicaciones" method="get">
+            <button  id="holatodasPublicaciones" style="display:none; padding-bottom:10px; float: right;margin: auto;" class="btn btn-warning" type="submit" value="TodasPublicaciones" name="todasPublicaciones" >Volver</button>
+        </form>
+    	<form action="menu" method="get">
+            <button  id="holaMenu2" style="display:none; padding-bottom:10px; float: right;margin: auto;" class="btn btn-warning" type="submit" value="Menu" name="menu" >Volver</button>
+        </form>
+        <form action="panel" method="get">
+            <button  id="holaPanel" style="display:none; padding-bottom:10px; float: right;margin: auto;" class="btn btn-warning" type="submit" value="Panel" name="panel" >Volver</button>
+        </form>
+        <form action="registerUsuario" method="get">
+            <button  id="holaRegisterUsuario" style="display:none; padding-bottom:10px; float: right;margin: auto;" class="btn btn-warning" type="submit" value="RegisterUsuario" name="registerusuario" >Volver</button>
+        </form>
+    </div>
+    <!--  FIN PANEL BOTONES INVISIBLES ;D -->
 
 <style>
 .body{
@@ -146,62 +207,6 @@
 	color: rgb(12, 97, 33);
 }
 </style>
-<body>
-        <!--  PANEL BOTONES INVISIBLES ;D -->
-    <div id="divBotonesInvisibles" style="display:none">
-    	<form action="amigos" method="get">
-            <button  id="holaAmigos" style="display:none; padding-bottom:10px; float: right;margin: auto;" class="btn btn-warning" type="submit" value="Amigos" name="amigos" >Volver</button>
-        </form>
-        <form action="gente" method="get">
-            <button  id="holaGente" style="display:none; padding-bottom:10px; float: right;margin: auto;" class="btn btn-warning" type="submit" value="Gente" name="Gente" >Volver</button>
-        </form>
-    	<form action="menu" method="get">
-            <button  id="holaMenu" style="display:none; padding-bottom:10px; float: right;margin: auto;" class="btn btn-warning" type="submit" value="Menu" name="menu" >Volver</button>
-        </form>
-        <form action="perfil" method="get">
-            <button  id="holaPerfil" style="display:none; padding-bottom:10px; float: right;margin: auto;" class="btn btn-warning" type="submit" value="Perfil" name="perfil" >Volver</button>
-        </form>
-    	<form action="todasPublicaciones" method="get">
-            <button  id="holatodasPublicaciones" style="display:none; padding-bottom:10px; float: right;margin: auto;" class="btn btn-warning" type="submit" value="TodasPublicaciones" name="todasPublicaciones" >Volver</button>
-        </form>
-        <form action="panel" method="get">
-            <button  id="holaPanel" style="display:none; padding-bottom:10px; float: right;margin: auto;" class="btn btn-warning" type="submit" value="Panel" name="panel" >Volver</button>
-        </form>
-        <form action="registerUsuario" method="get">
-            <button  id="holaRegisterUsuario" style="display:none; padding-bottom:10px; float: right;margin: auto;" class="btn btn-warning" type="submit" value="RegisterUsuario" name="registerusuario" >Volver</button>
-        </form>
-    </div>
-    <div id="navBar">
-        <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a href="init" class="navbar-brand" >Intravita</a>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li id="liPublicacion" ><a id="aPublicacion" >Publicaciones</a></li>
-                    <li id="liAmistad" ><a id="aAmistad" >Amigos</a></li>
-                    <li id="liMP"><a id="aMP" >Gente</a></li>
-                    <c:if test = "${persona.isEsAdmin() == true}">
-                    <li><a href="todasPublicaciones?todasPublicaciones=TodasPublicaciones" >Todas Publicaciones</a></li>
-                    <li><a href="panel"> Panel</a></li>
-                    <li><a href="registerUsuario" >Registra Usuario</a></li>
-                    </c:if>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li id="liPerfil"><a id="aPerfil" ><span class="glyphicon glyphicon-user"></span> Perfil</a></li>
-                    <li id="liLogout"><a id="aLogout" href="exit"><span href="exit" class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-                </ul>
-            </div>
-        </nav>
-
-    </div>
-    <%
-		HttpSession sesion = request.getSession();
-		Persona p= (Persona)sesion.getAttribute("persona");
-		if(p!=null){
-			response.sendRedirect("menu");
-		}
-	%>
 	
 	<script language="JavaScript" type="text/javascript">
 		if ("${mensaje}" != "") {

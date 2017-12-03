@@ -83,7 +83,7 @@
 				class="btn btn-warning" type="submit" value="TodasPublicaciones"
 				name="todasPublicaciones">Volver</button>
 		</form>
-		<form action="menu" method="get">
+		<form action="menu" method="post">
 			<button id="holaMenu2"
 				style="display: none; padding-bottom: 10px; float: right; margin: auto;"
 				class="btn btn-warning" type="submit" value="Menu" name="menu">Volver</button>
