@@ -34,20 +34,20 @@
                 </div>
                 <ul class="nav navbar-nav">
                 
-                    <li id="liPublicacion" class="active"><a id="aPublicacion" >Publicaciones</a></li>
+                    <li class="active"><a href="menu" >Publicaciones</a></li>
         
-                    <li id="liAmistad" type="submit" value="Amigos" name="amigos"><a id="aAmistad" >Amigos</a></li>
-                    <li id="liMP"><a id="aMP" >Gente</a></li>
+                    <li><a href="amigos" >Amigos</a></li>
+                    <li><a href="gente" >Gente</a></li>
                     <c:if test = "${persona.isEsAdmin() == true}">
-                    <li id="liTodasPublicaciones"><a id="aTodasPublicaciones" >Todas Publicaciones</a></li>
-                    <li id="liPanel" ><a id="aPanel"> Panel</a></li>
-                    <li id="liRegistroUser"><a id="aRegistroUser" >Registra Usuario</a></li>
+                    <li><a href="todasPublicaciones?todasPublicaciones=TodasPublicaciones" >Todas Publicaciones</a></li>
+                    <li><a href="panel"> Panel</a></li>
+                    <li><a href="registerUsuario" >Registra Usuario</a></li>
                     </c:if>
                     
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li id="liPerfil"><a id="aPerfil" ><span class="glyphicon glyphicon-user"></span> Perfil</a></li>
-                    <li id="liLogout"><a id="aLogout" href="exit"><span href="exit" class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                    <li><a href="perfil"><span class="glyphicon glyphicon-user"></span> Perfil</a></li>
+                    <li><a href="exit"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
                 </ul>
             </div>
         </nav>

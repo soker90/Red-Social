@@ -37,6 +37,7 @@ public class RegisterUsuarioController {
 	@RequestMapping(value = "registerUsuario", method = RequestMethod.GET)
 	public String register(Locale locale, Model model) {
 		logger.info("Register page! The client locale is {}.", locale);
+		System.out.println("lelelle");
 
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG,
