@@ -27,13 +27,13 @@
                     <a href="init" class="navbar-brand" >Intravita</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li id="liPublicacion" ><a id="aPublicacion" >Publicaciones</a></li>
-                    <li id="liAmistad" class="active"><a id="aAmistad" >Amigos</a></li>
-                    <li id="liMP"><a id="aMP" >Gente</a></li>
+                    <li><a href="menu" >Publicaciones</a></li>
+                    <li class="active"><a href="amigos" >Amigos</a></li>
+                    <li><a href="gente" >Gente</a></li>
                     <c:if test = "${persona.isEsAdmin() == true}">
-                    <li id="liTodasPublicaciones"><a id="aTodasPublicaciones" >Todas Publicaciones</a></li>
-                    <li id="liPanel" ><a id="aPanel"> Panel</a></li>
-                    <li id="liRegistroUser"><a id="aRegistroUser" >Registra Usuario</a></li>
+                    <li><a href="todasPublicaciones?todasPublicaciones=TodasPublicaciones" >Todas Publicaciones</a></li>
+                    <li><a href="panel"> Panel</a></li>
+                    <li><a href="registerUsuario" >Registra Usuario</a></li>
                     </c:if>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

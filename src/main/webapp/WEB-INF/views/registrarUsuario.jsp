@@ -182,9 +182,9 @@
                     <li id="liAmistad" ><a id="aAmistad" >Amigos</a></li>
                     <li id="liMP"><a id="aMP" >Gente</a></li>
                     <c:if test = "${persona.isEsAdmin() == true}">
-                    <li id="liTodasPublicaciones" ><a id="aTodasPublicaciones" >Todas Publicaciones</a></li>
-                    <li id="liPanel" ><a id="aPanel"> Panel</a></li>
-                    <li id="liRegistroUser"  class="active"><a id="aRegistroUser" >Registra Usuario</a></li>
+                    <li><a href="todasPublicaciones?todasPublicaciones=TodasPublicaciones" >Todas Publicaciones</a></li>
+                    <li><a href="panel"> Panel</a></li>
+                    <li><a href="registerUsuario" >Registra Usuario</a></li>
                     </c:if>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -273,68 +273,5 @@
 		document.form1.inputFotoRegistro.value = "${foto}";
 	</script>
 </body>
-    <script type="text/javascript">
-    
-    $('#btnPublicar').click(function(){
-    	var texto=$('#textareaPublicacion').val();
-    	$('#panel').append('<div id="publicacion" style="margin-top:10px; margin-left:10px; height:100px; width:90%;border-style:solid" ><div id="mensaje" class="col-md-6 col-lg-6 col-xs-6">'+texto+'</div><div id="perfil" class="col-lg-3 col-md-3 col-xs-3"><p><c:out value="${persona}"/>${persona.getNombre()}</p></div></div>');
-    });
 
-    $('#btnAdjuntarFoto').click(function(){
-    	alert('Funcionalidad No Disponible');
-    });
-    $('#liPublicacion').click(function(){
-		$('#holaMenu').click();
-    });
-
-    $('#aPublicacion').click(function(){
-    	$('#holaMenu').click();
-    });
-
-    $('#liAmistad').click(function(){
-    	$('#holaAmigos').click();
-    });
-
-    $('#aAmistad').click(function(){
-    	$('#holaAmigos').click();
-    });
-
-    $('#liMP').click(function(){
-    	$('#holaGente').click();
-    });
-    $('#liTodasPublicaciones').click(function(){
-    	$('#holatodasPublicaciones').click();
-    });
-	
-    $('#aTodasPublicaciones').click(function(){
-    	$('#holatodasPublicaciones').click();
-    });
-    $('#aMP').click(function(){
-    	$('#holaGente').click();
-    });
-    $('#liPerfil').click(function(){
-    	$('#holaPerfil').click();
-    });
-    $('#aPerfil').click(function(){
-    	$('#holaPerfil').click();
-    });
-    $('#liLogout').click(function(){
-    	$('#holaMenu2').click();
-    });
-    $('#aLogout').click(function(){
-    	$('#holaMenu2').click();
-    });
-    $('#liPanel').click(function(){
-    	$('#holaPanel').click();
-    });
-    $('#aPanel').click(function(){
-    	$('#holaPanel').click();
-    });
-    $('#liRegistroUser').click(function(){
-    	$('#holaRegisterUsuario').click();
-    });
-    $('#aRegistroUser').click(function(){
-    	$('#holaRegisterUsuario').click();
-    });
-</script>
 </html>
