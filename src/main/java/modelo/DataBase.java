@@ -15,10 +15,6 @@ import com.mongodb.client.MongoDatabase;
 public class DataBase {
 	private MongoClient client;
 	private MongoDatabase db;
-	//private MongoCollection<Document> dbUsuarios, dbPublicaciones;
-	//private Publicacion pub;
-	//private Document doc, aux;
-	//private MongoCursor<Document>elementos;
 	
 	private DataBase() {
 		MongoClientURI uri  = new MongoClientURI("mongodb://equipo03:pis03equipo@ds113935.mlab.com:13935/equipo03"); 
@@ -320,7 +316,5 @@ protected boolean createPublicacion(Publicacion p) {
     }
     return pubs;
   }
-
-
 	
 }
