@@ -203,4 +203,15 @@ public class Persona {
 		this.peticionesenviadas = peticionesenviadas;
 	}
 	
+	public boolean isAmigo(String username)
+	{
+		boolean encontrado = false;
+		for(String username1: amigos)
+		{
+			if(username.equals(username1))
+				encontrado = true;
+		}
+		return encontrado;
+	}
+	
 }
