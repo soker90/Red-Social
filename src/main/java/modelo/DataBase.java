@@ -334,6 +334,39 @@ protected boolean createPublicacion(Publicacion p) {
     }
     return pubs;
   }
+  
+  protected LinkedList<Publicacion> readAllPublicacionesUser(String username) {
+	    LinkedList<Publicacion>pubs = new LinkedList<Publicacion>();
+	    try {
+	      db = client.getDatabase(uri.getDatabase());
+	      dbPublicaciones = db.getCollection("publicaciones");
+	      elementos = dbPublicaciones.find().iterator();
+	      while(elementos.hasNext()) {
+	        aux = elementos.next();
+	        if(!aux.get("username").toString().equalsIgnoreCase(username) && 
+	        		!aux.get("compartir").toString().equals("privado"))
+	        	continue;
+	        else if(!aux.get("username").toString().equalsIgnoreCase(username) && 
+	        		!aux.get("compartir").toString().equals("amigos"))
+	        	continue;
+	        	
+	        List<String>els=(List<String>)aux.get("adjuntos");
+	        LinkedList<String> adjs=new LinkedList<String>();
+	        for(int i=0; i<els.size();i++) {
+	          adjs.add(els.get(i));
+	        }
+	        
+	        System.out.println(aux.get("mensaje").toString());
+	        System.out.println(aux.get("fecha").toString());
+	        System.out.println(aux.get("username").toString());
+	        System.out.println(aux.get("compartir").toString());
+	        pubs.add(new Publicacion(aux.get("username").toString(), aux.get("mensaje").toString(), aux.get("compartir").toString(), adjs, aux.get("fecha").toString()));
+	      }
+	    }catch(Exception ex) {
+	      System.out.println("Error al cargar publicaciones");
+	    }
+	    return pubs;
+	  }
 
 
 	

@@ -200,7 +200,7 @@ public class MenuController {
 		Persona user=(Persona) session.getAttribute("persona");
 		//username = request.getParameter("obtenerUsuario");
 		username= user.getUsername();
-		privacidad="publico";
+		privacidad=request.getParameter("privacidad");
 		
 		DAOPublicacion dao = new DAOPublicacion();
 		Publicacion p,a;
