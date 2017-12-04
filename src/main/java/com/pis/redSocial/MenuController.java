@@ -123,7 +123,7 @@ public class MenuController {
 		DAOPublicacion daoPublicacion = new DAOPublicacion();
 		HttpSession session=request.getSession();
 		Persona a=(Persona) session.getAttribute("persona");
-		List<Publicacion> publicaciones = daoPublicacion.leerPublicaciones(a.getUsername());
+		List<Publicacion> publicaciones = daoPublicacion.leerTodasPublicacionesUser(a.getUsername());
 		model.addAttribute("listPublicacionesPersona", publicaciones );
 		System.out.println("ewf");
 		
