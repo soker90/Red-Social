@@ -36,7 +36,7 @@ public class DAOPersona {
 	}
 	
 	public boolean update(Persona p) throws Exception {
-		//p.encrypt();
+		p.encrypt();
 		return db.update(p);
 	}
 	
