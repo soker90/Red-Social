@@ -5,7 +5,7 @@ import java.util.LinkedList;
 public class DAOPublicacion {
 	DataBase db;
 	public DAOPublicacion() {
-		db = new DataBase();
+		db = DataBase.get();
 	}
 	public boolean crearPublicacion(Publicacion p) {
 		return db.createPublicacion(p);

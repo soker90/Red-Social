@@ -6,9 +6,8 @@ import java.util.LinkedList;
 public class DAOPersona {
 	DataBase db;
 	public DAOPersona() {
-		db = new DataBase();
+		db = DataBase.get();
 	}
-	
 	public boolean crearPersona(Persona p) throws Exception {
 		p.encrypt();
 		return db.create(p);
