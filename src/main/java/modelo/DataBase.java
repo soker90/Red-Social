@@ -328,7 +328,7 @@ protected boolean createPublicacion(Publicacion p) {
 	      while(elementos.hasNext()) {
 	        aux = elementos.next();
 	        if(!aux.get("username").toString().equalsIgnoreCase(username) && 
-	        		aux.get("compartir").toString().equals("privado"))
+	        		aux.get("compartir").toString().equals("privada"))
 	        	continue;
 	        else if(!aux.get("username").toString().equalsIgnoreCase(username) && 
 	        		aux.get("compartir").toString().equals("amigos") && 
