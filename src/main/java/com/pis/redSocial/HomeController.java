@@ -81,9 +81,6 @@ public class HomeController {
 		
 		if(dao.login(p)) {
 			a = dao.getPersona(username);
-			if (!a.getUltimo_equipo().equalsIgnoreCase(InetAddress.getLocalHost().getHostName())) {
-				return new ModelAndView("homecaptcha", "persona", a);
-			}
 				
 			HttpSession misession= request.getSession(true);
 			misession.setAttribute("persona",a);

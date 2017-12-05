@@ -46,8 +46,7 @@ public class DataBase {
 					.append("peticiones",p.getPeticiones())
 					.append("peticionesenviadas", p.getPeticionesenviadas())
 					.append("fecha", p.getFecha())
-					.append("fecha_ultimo_login", p.getFecha_ultimo_login())
-					.append("ultimo_equipo", p.getUltimo_equipo());
+					.append("fecha_ultimo_login", p.getFecha_ultimo_login());
 			
 			
 			this.db.getCollection("usuarios").insertOne(doc);
@@ -142,7 +141,6 @@ public class DataBase {
 			if((doc.get("username").toString().equalsIgnoreCase(username))) {
 				p = new Persona(doc.getString("nombre"), doc.getString("apellidos"), doc.getString("username"), doc.getString("email"), doc.getString("clave"), doc.getString("direccion"), doc.getString("telefono"), doc.getString("foto"), doc.getBoolean("esAdmin"),(ArrayList<String>) doc.get("amigos"),(ArrayList<String>) doc.get("peticiones"),(ArrayList<String>) doc.get("peticionesenviadas"));
 				p.setFecha(doc.getDate("fecha"));
-				p.setUltimo_equipo("ultimo_equipo");
 			}
 		}		
 		return p;

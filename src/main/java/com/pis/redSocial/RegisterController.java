@@ -133,8 +133,7 @@ public class RegisterController {
 									
 							p = new Persona(nombre, apellidos, username, email, password, direccion, telefono, foto,
 									false, amigos,peticiones,peticionesenviadas);
-							p.setUltimo_equipo((String) request.getSession().getAttribute("equipo"));
-									p.setFecha(new Date());
+							p.setFecha(new Date());
 							dao.crearPersona(p);
 							request.getSession().setAttribute("persona", p);
 							request.getSession().setAttribute("usernombre", p.getNombre());
