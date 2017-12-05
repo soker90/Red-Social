@@ -52,9 +52,9 @@ public class HomeController {
 		Persona p= (Persona)misession.getAttribute("persona");
 		if(p!=null) {
 			System.out.println(p.getUsername());
-			return new ModelAndView("menu");
+			return new ModelAndView("redirect:/menu");
 		}
-		return new ModelAndView("home");
+		return new ModelAndView("redirect:/menu");
 		
 	}
 	
@@ -102,11 +102,9 @@ public class HomeController {
 			} catch (Exception e) {
 			    System.out.println("Cuenta antigua");
 			}
-			if(a.isEsAdmin()) {
-				return new ModelAndView("menu", "persona", a);
-			}else {
-				return new ModelAndView("menu", "persona", a);
-			}
+			
+			return new ModelAndView("redirect:/menu");
+			
 		}else {
 			return new ModelAndView("home", "aviso", "El usuario y/o clave son incorrectos.");
 		}
