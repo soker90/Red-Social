@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Persona {
-	private String nombre, apellidos, username, email, password, direccion, telefono, foto, ultimo_equipo;
+	private String nombre, apellidos, username, email, password, direccion, telefono, foto;
 	private Date fecha_caducidad_password, fecha_ultimo_login;
 	
 
@@ -28,14 +28,6 @@ public class Persona {
 
 	public void setFecha(Date fecha) {
 		this.fecha_caducidad_password = fecha;
-	}
-
-	public String getUltimo_equipo() {
-		return ultimo_equipo;
-	}
-
-	public void setUltimo_equipo(String ultimo_equipo) {
-		this.ultimo_equipo = ultimo_equipo;
 	}
 
 	private boolean esAdmin;
