@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletException;
@@ -23,9 +24,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 
 @Controller
 public class MenuController {
@@ -181,7 +187,7 @@ public class MenuController {
 		String newMessage = request.getParameter("nuevoMensaje");
 		//String newMessage = "Prueba de editar el mensaje";
 		LinkedList<String> listaVacia = new LinkedList<String> ();
-		Publicacion pubNew = new Publicacion(newUsername,newMessage,"publico",listaVacia);
+		Publicacion pubNew = new Publicacion(newUsername,newMessage,"publico",listaVacia, "");
 		daoPublicacion.actualizaPublicacion(pubAnt, pubNew);
 		HttpSession session=request.getSession();
 		Persona a=(Persona) session.getAttribute("persona");
@@ -192,7 +198,7 @@ public class MenuController {
 	}
 	
 	@RequestMapping(value = "publicarMensaje", method = RequestMethod.POST)
-	public ModelAndView publicar(HttpServletRequest request, HttpServletResponse response,Model model)throws Exception{
+	public ModelAndView publicar(HttpServletRequest request, HttpServletResponse response,Model model, @ModelAttribute FileFormBean fileFormBean)throws Exception{
 		String username, texto,privacidad;
 		LinkedList<String> adjuntos= new LinkedList<String>();
 		texto = request.getParameter("message");
@@ -201,10 +207,21 @@ public class MenuController {
 		//username = request.getParameter("obtenerUsuario");
 		username= user.getUsername();
 		privacidad=request.getParameter("privacidad");
+		String imagen = "";
+		Date d = new Date();
+		try {
+			imagen = grabarFicheroALocal(fileFormBean,username+ String.valueOf(d.getTime())
+			+ Math.random()*100+1);
+			System.out.println(imagen);
+		}catch(Exception e)
+		{
+			imagen = "";
+		}
+		
 		
 		DAOPublicacion dao = new DAOPublicacion();
 		Publicacion p,a;
-		p = new Publicacion(username,texto,privacidad,adjuntos);
+		p = new Publicacion(username,texto,privacidad,adjuntos, imagen);
 		if(dao.crearPublicacion(p)) {
 			DAOPublicacion daoPublicacion = new DAOPublicacion();
 			List<Publicacion> publicaciones = daoPublicacion.leerPublicaciones(username);
@@ -214,6 +231,26 @@ public class MenuController {
 			return new ModelAndView("menu", "aviso", "Ha habido algún problema");
 		}
 		
+	}
+	
+	private String grabarFicheroALocal(FileFormBean fileFormBean, String username) throws Exception {
+		CommonsMultipartFile uploaded = fileFormBean.getFichero();
+		   	
+    	//Cloudinary
+    	Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+    			  "cloud_name", "dtajtzcgw",
+    			  "api_key", "942888456823941",
+    			  "api_secret", "FefbhNW6ZnniBf4wFH0d6JUcn84"));
+    	
+    	//cloudinary.uploader().rename(username, username+"_old", ObjectUtils.asMap("overwrite", true));
+    	Map upload = cloudinary.uploader().upload(uploaded.getBytes(), ObjectUtils.asMap(
+    			"public_id", username));
+    	Integer version =(Integer) upload.get("version");
+    	String cadVersion = "v"+String.valueOf(version);
+    	//String url= cloudinary.url().imageTag(username+".jpg");
+    	String url= "http://res.cloudinary.com/dtajtzcgw/image/upload/"+cadVersion+"/"+username+".jpg";
+    	return url;
+
 	}
 	
 	

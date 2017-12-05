@@ -180,7 +180,8 @@ protected boolean createPublicacion(Publicacion p) {
 	          .append("mensaje", p.getMensaje())
 	          .append("compartir", p.getCompartirCon())
 	          .append("adjuntos", p.getAdjuntos())
-	          .append("fecha", p.getFecha().toString());
+	          .append("fecha", p.getFecha().toString())
+	          .append("fecha", p.getImagen());
 	      db.getCollection("publicaciones").insertOne(doc);
 	      return true;
 	    }catch(Exception ex) {
@@ -203,7 +204,7 @@ protected boolean createPublicacion(Publicacion p) {
           for(int i=0; i<els.size();i++) {
             adjs.add(els.get(i));
           }
-          pub=new Publicacion(aux.get("username").toString(), aux.get("mensaje").toString(), aux.get("compartir").toString(), adjs, aux.get("fecha").toString());
+          pub=new Publicacion(aux.get("username").toString(), aux.get("mensaje").toString(), aux.get("compartir").toString(), adjs, aux.get("fecha").toString(), aux.get("imagen").toString());
         }
       }
     }catch(Exception ex) {
@@ -284,11 +285,10 @@ protected boolean createPublicacion(Publicacion p) {
           for(int i=0; i<els.size();i++) {
             adjs.add(els.get(i));
           }
-          pubs.add(new Publicacion(aux.get("username").toString(), aux.get("mensaje").toString(), aux.get("compartir").toString(), adjs, aux.get("fecha").toString()));
-        }
+          pubs.add(new Publicacion(aux.get("username").toString(), aux.get("mensaje").toString(), aux.get("compartir").toString(), adjs, aux.get("fecha").toString(), aux.get("imagen").toString()));        }
       }
     }catch(Exception ex) {
-      ex.printStackTrace();
+      System.out.println("");
     }
     return pubs;
   }
@@ -309,7 +309,7 @@ protected boolean createPublicacion(Publicacion p) {
         System.out.println(aux.get("fecha").toString());
         System.out.println(aux.get("username").toString());
         System.out.println(aux.get("compartir").toString());
-        pubs.add(new Publicacion(aux.get("username").toString(), aux.get("mensaje").toString(), aux.get("compartir").toString(), adjs, aux.get("fecha").toString()));
+        pubs.add(new Publicacion(aux.get("username").toString(), aux.get("mensaje").toString(), aux.get("compartir").toString(), adjs, aux.get("fecha").toString(), aux.get("imagen").toString()));
       }
     }catch(Exception ex) {
       ex.printStackTrace();
@@ -341,7 +341,7 @@ protected boolean createPublicacion(Publicacion p) {
 	        System.out.println(aux.get("fecha").toString());
 	        System.out.println(aux.get("username").toString());
 	        System.out.println(aux.get("compartir").toString());
-	        pubs.add(new Publicacion(aux.get("username").toString(), aux.get("mensaje").toString(), aux.get("compartir").toString(), adjs, aux.get("fecha").toString()));
+	        pubs.add(new Publicacion(aux.get("username").toString(), aux.get("mensaje").toString(), aux.get("compartir").toString(), adjs, aux.get("fecha").toString(), aux.get("imagen").toString()));
 	      }
 	    }catch(Exception ex) {
 	      System.out.println("Error al cargar publicaciones");

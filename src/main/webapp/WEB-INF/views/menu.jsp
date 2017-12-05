@@ -113,16 +113,19 @@
 	<div id="divPublicaciones" style="height: 100%;width:100%; margin-top:-20px; position:absolute;" class="col-lg-12 col-md-12 col-xs-12">
         <div class="subencabezado" style="width:100%" ">Publicaciones</div>
         <div id="publicacion" class="row-lg-3 row-md-3 row-xs-3">
-  			<form action="publicarMensaje" method="post"> <input id="obtenerUsuario" style="display:none">
+  			<form action="publicarMensaje" method="post" enctype="multipart/form-data" commandName="fileFormBean"> <input id="obtenerUsuario" style="display:none">
   			<input style="display:none" id="nombreUser" name="nombreUser" value="${persona.getNombre()}" disabled>
   			
   				<input name="message" id="textareaPublicacion" style="margin-top: 20px; padding-bottom: 30px; width:70%">
+	            
 	            <select name="privacidad" id="privacidad">
 	                <option value="publica">Publica</option>
 	                <option value="privada">Privada</option>
 	                <option value="amigos">Solo amigos</option>
 	            </select>
+	            
   			<button style="float: right; margin-top: 26px; width: 144px; margin-right: 83px;" class="col-md-3 col-lg-3 col-xs-3 btn btn-success" id="btnPublicar" type="submit">Publicar</button>
+  			<input type="file" name="fichero" />
   			</form>
 
      </div>

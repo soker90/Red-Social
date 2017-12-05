@@ -10,22 +10,25 @@ public class Publicacion {
 	String mensaje, compartirCon, username;
 	LinkedList<String> adjuntos;
 	Date fecha;
+	String imagen;
 	
 	//PARA CREAR UNA PUBLICACION NUEVA
-	public Publicacion(String user, String m, String cC, LinkedList<String>adj) {
+	public Publicacion(String user, String m, String cC, LinkedList<String>adj, String imagen) {
 		setUsername(user);
 		setMensaje(m);
 		setCompartirCon(cC);
 		setAdjuntos(adj);
 		creaFecha();
+		this.imagen = imagen;
 	}
 	//ESPECIAL: SOLO PARA LECTURA DE PUBLICACIONES DE LA BASE DATOS
-	public Publicacion(String user, String m, String cC, LinkedList<String>adj, String f) {
+	public Publicacion(String user, String m, String cC, LinkedList<String>adj, String f, String imagen) {
 		setUsername(user);
 		setMensaje(m);
 		setCompartirCon(cC);
 		setAdjuntos(adj);
 		setFecha(f);
+		this.imagen = imagen;
 	}
 	
 		
@@ -70,4 +73,12 @@ public class Publicacion {
 	protected void creaFecha() {
 		this.fecha=new Date();
 	}
+	public String getImagen() {
+		return imagen;
+	}
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+	
+	
 }
