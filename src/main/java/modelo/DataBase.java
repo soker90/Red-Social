@@ -319,8 +319,9 @@ protected boolean createPublicacion(Publicacion p) {
   
   protected LinkedList<Publicacion> readAllPublicacionesUser(String username) {
 	    LinkedList<Publicacion>pubs = new LinkedList<Publicacion>();
+	    Document aux = null;
 	    try {
-	      elementos = db.getCollection("publicaciones").find().iterator();
+	    	MongoCursor<Document> elementos = db.getCollection("publicaciones").find().iterator();
 	      while(elementos.hasNext()) {
 	        aux = elementos.next();
 	        if(!aux.get("username").toString().equalsIgnoreCase(username) && 
