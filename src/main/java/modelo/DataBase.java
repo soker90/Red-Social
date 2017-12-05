@@ -13,23 +13,26 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
 public class DataBase {
-	MongoClientURI uri;
-	MongoClient client;
-	MongoDatabase db;
-	MongoCollection<Document> dbUsuarios, dbPublicaciones;
-	Publicacion pub;
-	Document doc, aux;
-	MongoCursor<Document>elementos;
+	private MongoClient client;
+	private MongoDatabase db;
 	
-	public DataBase() {
-		uri  = new MongoClientURI("mongodb://equipo03:pis03equipo@ds113935.mlab.com:13935/equipo03"); 
-        client = new MongoClient(uri);
+	private DataBase() {
+		MongoClientURI uri  = new MongoClientURI("mongodb://equipo03:pis03equipo@ds113935.mlab.com:13935/equipo03"); 
+        this.client = new MongoClient(uri);
+        this.db = client.getDatabase(uri.getDatabase());
 	}
 	
+	public static class SingletonHolder{
+        static DataBase singleton = new DataBase();
+    }
+	
+	public static DataBase get(){
+        return SingletonHolder.singleton;
+    }
+	
 	protected boolean create(Persona p) {
+		Document doc = null;
 		try {
-			db = client.getDatabase(uri.getDatabase());
-			dbUsuarios = db.getCollection("usuarios");
 			doc=new Document("email",p.getEmail())
 					.append("clave", p.getPassword())
 					.append("username", p.getUsername())
@@ -46,7 +49,7 @@ public class DataBase {
 					.append("fecha_ultimo_login", p.getFecha_ultimo_login());
 			
 			
-			dbUsuarios.insertOne(doc);
+			this.db.getCollection("usuarios").insertOne(doc);
 			return true;
 		}catch(Exception ex) {
 			ex.printStackTrace();
@@ -55,10 +58,9 @@ public class DataBase {
 	}
 	
 	protected boolean existeEmail(String email) {
+		Document doc = null;
 		boolean existe = false;
-		db = client.getDatabase(uri.getDatabase());
-		dbUsuarios = db.getCollection("usuarios");
-		elementos = dbUsuarios.find().iterator();
+		MongoCursor<Document> elementos = this.db.getCollection("usuarios").find().iterator();
 		while(elementos.hasNext()) {
 			doc=elementos.next();
 			if(doc.get("email").toString().equalsIgnoreCase(email))existe=true;
@@ -67,10 +69,9 @@ public class DataBase {
 	}
 	
 	protected boolean existeUsername(String username) {
+		Document doc= null;
 		boolean existe = false;
-		db = client.getDatabase(uri.getDatabase());
-		dbUsuarios = db.getCollection("usuarios");
-		elementos = dbUsuarios.find().iterator();
+		MongoCursor<Document> elementos = db.getCollection("usuarios").find().iterator();
 		while(elementos.hasNext()) {
 			doc=elementos.next();
 			if(doc.get("username").toString().equalsIgnoreCase(username))existe=true;
@@ -79,10 +80,9 @@ public class DataBase {
 	}
 	
 	protected boolean login(Persona p) throws Exception {
+		Document doc=null;
 		boolean logueado = false;
-		db = client.getDatabase(uri.getDatabase());
-		dbUsuarios = db.getCollection("usuarios");
-		elementos = dbUsuarios.find().iterator();
+		MongoCursor<Document> elementos = db.getCollection("usuarios").find().iterator();
 		while(elementos.hasNext()) {
 			doc=elementos.next();
 			if((doc.get("username").toString().equalsIgnoreCase(p.getUsername()))&&
@@ -94,15 +94,14 @@ public class DataBase {
 	}
 	
 	protected boolean delete(Persona p) {
+		Document aux=null;
 		boolean borrado= false;
 		try {
-			db = client.getDatabase(uri.getDatabase());
-			dbUsuarios = db.getCollection("usuarios");
-			elementos = dbUsuarios.find().iterator();
+			MongoCursor<Document> elementos = db.getCollection("usuarios").find().iterator();
 			while(elementos.hasNext()) {
 				aux=elementos.next();
 				if((aux.get("username").toString().equalsIgnoreCase(p.getUsername()))) {
-					dbUsuarios.deleteOne(aux);
+					db.getCollection("usuarios").deleteOne(aux);
 					borrado=true;
 				}
 			}
@@ -113,27 +112,20 @@ public class DataBase {
 	}
 
 	protected boolean deleteEmail(String email) {
-		
-		db = client.getDatabase(uri.getDatabase());
-		dbUsuarios = db.getCollection("usuarios");
-		elementos = dbUsuarios.find().iterator();
+		Document aux=null;
+		MongoCursor<Document> elementos = db.getCollection("usuarios").find().iterator();
 		
 		while(elementos.hasNext()) {
 			aux=elementos.next();
 			if((aux.get("email").toString().equalsIgnoreCase(email))) {
-				dbUsuarios.deleteOne(aux);
+				db.getCollection("usuarios").deleteOne(aux);
 			
 			}
 		}
 		return true;
 	}
 	
-	protected boolean update(Persona p){
-		
-		db = client.getDatabase(uri.getDatabase());
-		dbUsuarios = db.getCollection("usuarios");
-		elementos = dbUsuarios.find().iterator();
-		
+	protected boolean update(Persona p){		
 		deleteEmail(p.getEmail());
 		create(p);
 		return true;
@@ -141,10 +133,9 @@ public class DataBase {
 	
 	@SuppressWarnings("unchecked")
 	protected Persona getPersona(String username) {
+		Document doc=null;
 		Persona p=null;
-		db = client.getDatabase(uri.getDatabase());
-		dbUsuarios = db.getCollection("usuarios");
-		elementos = dbUsuarios.find().iterator();
+		MongoCursor<Document> elementos = db.getCollection("usuarios").find().iterator();
 		while(elementos.hasNext()) {
 			doc=elementos.next();
 			if((doc.get("username").toString().equalsIgnoreCase(username))) {
@@ -157,9 +148,8 @@ public class DataBase {
 	
 	protected Persona getPersonaByEmail(String email) {
 		Persona p = null;
-		db = client.getDatabase(uri.getDatabase());
-		dbUsuarios = db.getCollection("usuarios");
-		elementos = dbUsuarios.find().iterator();
+		Document doc=null;
+		MongoCursor<Document> elementos = db.getCollection("usuarios").find().iterator();
 		while(elementos.hasNext()) {
 			doc=elementos.next();
 			if((doc.get("email").toString().equalsIgnoreCase(email))) {
@@ -171,11 +161,10 @@ public class DataBase {
 	
 	@SuppressWarnings("unchecked")
 	protected ArrayList<Persona> getAllPersonas(){
+		Document doc=null;
 		ArrayList<Persona> personas = new ArrayList<Persona>();
 		Persona p = null;
-		db = client.getDatabase(uri.getDatabase());
-		dbUsuarios = db.getCollection("usuarios");
-		elementos = dbUsuarios.find().iterator();
+		MongoCursor<Document> elementos = db.getCollection("usuarios").find().iterator();
 		while(elementos.hasNext()) {
 			doc=elementos.next();
 			p = new Persona(doc.getString("nombre"), doc.getString("apellidos"), doc.getString("username"), doc.getString("email"), doc.getString("clave"), doc.getString("direccion"), doc.getString("telefono"), doc.getString("foto"), doc.getBoolean("esAdmin"), (ArrayList<String>) doc.get("amigos"),(ArrayList<String>) doc.get("peticiones"),(ArrayList<String>) doc.get("peticionesenviadas"));
@@ -185,15 +174,14 @@ public class DataBase {
 	}
 
 protected boolean createPublicacion(Publicacion p) {
+	Document doc=null;
 	try {
-	      db = client.getDatabase(uri.getDatabase());
-	      dbPublicaciones = db.getCollection("publicaciones");
 	      doc=new Document("username", p.getUsername())
 	          .append("mensaje", p.getMensaje())
 	          .append("compartir", p.getCompartirCon())
 	          .append("adjuntos", p.getAdjuntos())
 	          .append("fecha", p.getFecha().toString());
-	      dbPublicaciones.insertOne(doc);
+	      db.getCollection("publicaciones").insertOne(doc);
 	      return true;
 	    }catch(Exception ex) {
 	      ex.printStackTrace();
@@ -202,11 +190,11 @@ protected boolean createPublicacion(Publicacion p) {
   }
   
   protected Publicacion readPublicacion(String username, String fecha) {
-    try {
-      pub = null;
-      db = client.getDatabase(uri.getDatabase());
-      dbPublicaciones = db.getCollection("publicaciones");
-      elementos = dbPublicaciones.find().iterator();
+	  Document aux=null;
+      Publicacion pub = null;
+
+	  try {
+		  MongoCursor<Document> elementos = db.getCollection("publicaciones").find().iterator();
       while(elementos.hasNext()) {
         aux = elementos.next();
         if(aux.get("username").toString().equalsIgnoreCase(username)&&(aux.get("fecha").toString().equalsIgnoreCase(fecha))) {
@@ -235,16 +223,15 @@ protected boolean createPublicacion(Publicacion p) {
     }
   }
   protected boolean deletePublicacion(Publicacion pub) {
+	  Document aux = null;
     boolean borrado= false;
-    db = client.getDatabase(uri.getDatabase());
-    dbPublicaciones = db.getCollection("publicaciones");
-    elementos = dbPublicaciones.find().iterator();
+    MongoCursor<Document> elementos = db.getCollection("publicaciones").find().iterator();
     while(elementos.hasNext()) {
       aux=elementos.next();
       System.out.println("Entra: "+aux.get("username").toString()+" "+aux.get("fecha").toString());
       if((aux.get("username").toString().equalsIgnoreCase(pub.getUsername()))&&
          (aux.get("fecha").toString().equalsIgnoreCase(pub.getFecha().toString()))) {
-        dbPublicaciones.deleteOne(aux);
+        db.getCollection("publicaciones").deleteOne(aux);
         borrado=true;
       }
     }
@@ -252,47 +239,43 @@ protected boolean createPublicacion(Publicacion p) {
   }
   
   protected boolean deletePublicacionExacta(String username, String fecha) {
-    db = client.getDatabase(uri.getDatabase());
-    dbPublicaciones = db.getCollection("publicaciones");
-    elementos = dbPublicaciones.find().iterator();
+    Document aux=null;
+	MongoCursor<Document> elementos = db.getCollection("publicaciones").find().iterator();
     while(elementos.hasNext()) {
       aux=elementos.next();
       if((aux.get("username").toString().equalsIgnoreCase(username))&&(aux.get("fecha").toString().equalsIgnoreCase(fecha))) {
-        dbPublicaciones.deleteOne(aux);
+        db.getCollection("publicaciones").deleteOne(aux);
       }
     }
     return true;
   }
   protected boolean deletePublicacionesUsuario(String username) {
-	    db = client.getDatabase(uri.getDatabase());
-	    dbPublicaciones = db.getCollection("publicaciones");
-	    elementos = dbPublicaciones.find().iterator();
+	  Document aux=null;
+	    MongoCursor<Document> elementos = db.getCollection("publicaciones").find().iterator();
 	    while(elementos.hasNext()) {
 	      aux=elementos.next();
 	      if((aux.get("username").toString().equalsIgnoreCase(username))) {
-	        dbPublicaciones.deleteOne(aux);
+	        db.getCollection("publicaciones").deleteOne(aux);
 	      }
 	    }
 	    return true;
 	  }
   
   protected boolean deleteAllPublicaciones() {
-    db = client.getDatabase(uri.getDatabase());
-    dbPublicaciones = db.getCollection("publicaciones");
-    elementos = dbPublicaciones.find().iterator();
+	  Document aux=null;
+    MongoCursor<Document> elementos = db.getCollection("publicaciones").find().iterator();
     while(elementos.hasNext()) {
       aux=elementos.next();
-      dbPublicaciones.deleteOne(aux);
+      db.getCollection("publicaciones").deleteOne(aux);
     }
     return true;
   }
   
   protected LinkedList<Publicacion> readPublicaciones(String username) {
     LinkedList<Publicacion>pubs = new LinkedList<Publicacion>();
+    Document aux=null;
     try {
-      db = client.getDatabase(uri.getDatabase());
-      dbPublicaciones = db.getCollection("publicaciones");
-      elementos = dbPublicaciones.find().iterator();
+      MongoCursor<Document> elementos = db.getCollection("publicaciones").find().iterator();
       while(elementos.hasNext()) {
         aux = elementos.next();
         if(aux.get("username").toString().equalsIgnoreCase(username)) {
@@ -312,10 +295,9 @@ protected boolean createPublicacion(Publicacion p) {
   
   protected LinkedList<Publicacion> readAllPublicaciones() {
     LinkedList<Publicacion>pubs = new LinkedList<Publicacion>();
+    Document aux=null;
     try {
-      db = client.getDatabase(uri.getDatabase());
-      dbPublicaciones = db.getCollection("publicaciones");
-      elementos = dbPublicaciones.find().iterator();
+      MongoCursor<Document> elementos = db.getCollection("publicaciones").find().iterator();
       while(elementos.hasNext()) {
         aux = elementos.next();
         List<String>els=(List<String>)aux.get("adjuntos");
@@ -337,11 +319,12 @@ protected boolean createPublicacion(Publicacion p) {
   
   public LinkedList<Publicacion> readAllPublicacionesUser(Persona user) {
 	    LinkedList<Publicacion>pubs = new LinkedList<Publicacion>();
+
 	    String username = user.getUsername();
+	    Document aux = null;
+    
 	    try {
-	      db = client.getDatabase(uri.getDatabase());
-	      dbPublicaciones = db.getCollection("publicaciones");
-	      elementos = dbPublicaciones.find().iterator();
+	    	MongoCursor<Document> elementos = db.getCollection("publicaciones").find().iterator();
 	      while(elementos.hasNext()) {
 	        aux = elementos.next();
 	        if(!aux.get("username").toString().equalsIgnoreCase(username) && 
