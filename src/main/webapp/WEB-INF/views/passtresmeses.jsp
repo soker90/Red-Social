@@ -184,7 +184,7 @@
 					<div id="remember" class="checkbox"></div>
 					<button id="btnSignup"
 						class="btn btn-lg btn-primary btn-block btn-signin" type="submit"
-						onclick="validarFormularios()">Sign up</button>
+						onclick="validarFormularios()">Cambiar</button>
 				</form>
 				<!--  
 				<form method="get" action="photo">
