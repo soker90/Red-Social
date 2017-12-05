@@ -1,10 +1,14 @@
 package modelo;
 
+import java.security.MessageDigest;
+import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import static org.apache.commons.codec.binary.Base64.decodeBase64;
-import static org.apache.commons.codec.binary.Base64.encodeBase64;
+import javax.xml.bind.DatatypeConverter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,15 +78,23 @@ public class Persona {
     }
 	
 	public void encrypt() throws Exception {
-        Cipher cipher = Cipher.getInstance(cI);
-        SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(), alg);
-        IvParameterSpec ivParameterSpec = new IvParameterSpec(iv.getBytes());
-        cipher.init(Cipher.ENCRYPT_MODE, skeySpec, ivParameterSpec);
-        byte[] encrypted = cipher.doFinal(getPassword().getBytes());
-        setPassword(new String(encodeBase64(encrypted)));
+		String pass_md5;
+    	byte[] thedigest = null;
+    	String pass = this.password;
+		try {
+			byte[] bytesOfMessage = pass.getBytes("UTF-8");
+
+			MessageDigest md = MessageDigest.getInstance("SHA-384");
+			thedigest = md.digest(bytesOfMessage);
+			pass_md5 = DatatypeConverter.printHexBinary(thedigest).toLowerCase();
+			setPassword(pass_md5);
+		}catch(Exception e)
+		{
+			System.out.println(e.toString());
+		}
 	}
 	
-	public void decrypt() throws Exception {
+	/*public void decrypt() throws Exception {
         Cipher cipher = Cipher.getInstance(cI);
         SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(), alg);
         IvParameterSpec ivParameterSpec = new IvParameterSpec(iv.getBytes());
@@ -90,7 +102,7 @@ public class Persona {
         cipher.init(Cipher.DECRYPT_MODE, skeySpec, ivParameterSpec);
         byte[] decrypted = cipher.doFinal(enc);
         setPassword(new String(decrypted));
-	}
+	}*/
 	
 	private boolean esNumero(char n) {
 		if(n>='0'&&n<='9')return true;

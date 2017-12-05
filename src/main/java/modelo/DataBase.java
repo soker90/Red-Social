@@ -86,7 +86,7 @@ public class DataBase {
 		while(elementos.hasNext()) {
 			doc=elementos.next();
 			if((doc.get("username").toString().equalsIgnoreCase(p.getUsername()))&&
-			   (doc.get("clave").toString().equalsIgnoreCase(p.getPassword()))) {
+			   (doc.get("clave").toString().equals(p.getPassword()))) {
 				logueado=true;
 			}
 		}

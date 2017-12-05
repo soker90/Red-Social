@@ -115,7 +115,7 @@ private static final Logger logger = LoggerFactory.getLogger(ModificarPerfilCont
 			user.setFoto(urlfoto);
 			DAOPersona daoPersona = new DAOPersona();
 			daoPersona.update(user);
-			user.decrypt();
+			//user.decrypt();
 			session.removeAttribute("persona");
 			session.setAttribute("persona", user);
 			return new ModelAndView("perfil");

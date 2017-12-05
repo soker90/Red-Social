@@ -42,13 +42,13 @@ public class DAOPersona {
 	
 	public Persona getPersona(String username) throws Exception {
 		Persona p= db.getPersona(username);
-		p.decrypt();
+		//p.decrypt();
 		return p;
 	}
 	
 	public Persona getPersonaByEmail(String email) throws Exception {
 		Persona p= db.getPersonaByEmail(email);
-		p.decrypt();
+		//p.decrypt();
 		return p;
 	}
 	

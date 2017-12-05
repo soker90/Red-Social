@@ -72,13 +72,13 @@ public class HomeController {
 		String username, password;
 		username = request.getParameter("inputEmail");
 		password = request.getParameter("inputPassword");
+
 		DAOPersona dao = new DAOPersona();
 		Persona p,a;
 	    Date date1;
 	    Date date2 = new Date();
 		p = new Persona(username, password);
-		
-		
+
 		if(dao.login(p)) {
 			a = dao.getPersona(username);
 				
