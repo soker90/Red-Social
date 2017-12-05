@@ -77,6 +77,8 @@ public class HomeController {
 	    Date date1;
 	    Date date2 = new Date();
 		p = new Persona(username, password);
+		
+		
 		if(dao.login(p)) {
 			a = dao.getPersona(username);
 			if (!a.getUltimo_equipo().equalsIgnoreCase(InetAddress.getLocalHost().getHostName())) {

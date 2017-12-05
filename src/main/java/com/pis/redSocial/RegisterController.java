@@ -130,14 +130,10 @@ public class RegisterController {
 							//CREA USUARIO
 						if (verify) {
 
-									String hostname = "Unknown";
-									    InetAddress addr;
-									    addr = InetAddress.getLocalHost();
-									    hostname = addr.getHostName();
+									
 							p = new Persona(nombre, apellidos, username, email, password, direccion, telefono, foto,
 									false, amigos,peticiones,peticionesenviadas);
-							p.setUltimo_equipo(hostname);
-							System.out.println(hostname);
+							p.setUltimo_equipo((String) request.getSession().getAttribute("equipo"));
 									p.setFecha(new Date());
 							dao.crearPersona(p);
 							request.getSession().setAttribute("persona", p);
