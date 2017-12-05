@@ -3,6 +3,7 @@ package com.pis.redSocial;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -130,6 +131,7 @@ public class RegisterController {
 						if (verify) {
 							p = new Persona(nombre, apellidos, username, email, password, direccion, telefono, foto,
 									false, amigos,peticiones,peticionesenviadas);
+							p.setUltimo_equipo(InetAddress.getLocalHost().getHostName());
 									p.setFecha(new Date());
 							dao.crearPersona(p);
 							request.getSession().setAttribute("persona", p);

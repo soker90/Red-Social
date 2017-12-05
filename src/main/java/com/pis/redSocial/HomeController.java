@@ -22,6 +22,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * Handles requests for the application home page.
@@ -77,6 +79,10 @@ public class HomeController {
 		p = new Persona(username, password);
 		if(dao.login(p)) {
 			a = dao.getPersona(username);
+			if (!a.getUltimo_equipo().equalsIgnoreCase(InetAddress.getLocalHost().getHostName())) {
+				return new ModelAndView("homecaptcha", "persona", a);
+			}
+				
 			HttpSession misession= request.getSession(true);
 			misession.setAttribute("persona",a);
 			DAOPublicacion daoPublicacion = new DAOPublicacion();
