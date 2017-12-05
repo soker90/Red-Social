@@ -35,7 +35,7 @@ public class VerifyCaptch {
 		String postParams = "secret=" + secret + "&response="
 				+ gRecaptchaResponse;
 
-		// Send post request
+		// Send post srequest
 		con.setDoOutput(true);
 		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 		wr.writeBytes(postParams);

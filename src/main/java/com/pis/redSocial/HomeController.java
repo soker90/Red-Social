@@ -22,6 +22,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * Handles requests for the application home page.
@@ -50,9 +52,9 @@ public class HomeController {
 		Persona p= (Persona)misession.getAttribute("persona");
 		if(p!=null) {
 			System.out.println(p.getUsername());
-			return new ModelAndView("menu");
+			return new ModelAndView("redirect:/menu");
 		}
-		return new ModelAndView("home");
+		return new ModelAndView("redirect:/menu");
 		
 	}
 	
@@ -79,6 +81,7 @@ public class HomeController {
 
 		if(dao.login(p)) {
 			a = dao.getPersona(username);
+				
 			HttpSession misession= request.getSession(true);
 			misession.setAttribute("persona",a);
 			DAOPublicacion daoPublicacion = new DAOPublicacion();
@@ -98,11 +101,9 @@ public class HomeController {
 			} catch (Exception e) {
 			    System.out.println("Cuenta antigua");
 			}
-			if(a.isEsAdmin()) {
-				return new ModelAndView("menu", "persona", a);
-			}else {
-				return new ModelAndView("menu", "persona", a);
-			}
+			
+			return new ModelAndView("redirect:/menu");
+			
 		}else {
 			return new ModelAndView("home", "aviso", "El usuario y/o clave son incorrectos.");
 		}
