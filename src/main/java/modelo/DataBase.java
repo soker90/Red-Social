@@ -317,25 +317,25 @@ protected boolean createPublicacion(Publicacion p) {
     return pubs;
   }
   
-  protected LinkedList<Publicacion> readAllPublicacionesUser(String username) {
+  public LinkedList<Publicacion> readAllPublicacionesUser(Persona user) {
 	    LinkedList<Publicacion>pubs = new LinkedList<Publicacion>();
+
+	    String username = user.getUsername();
 	    Document aux = null;
+    
 	    try {
 	    	MongoCursor<Document> elementos = db.getCollection("publicaciones").find().iterator();
 	      while(elementos.hasNext()) {
 	        aux = elementos.next();
 	        if(!aux.get("username").toString().equalsIgnoreCase(username) && 
-	        		!aux.get("compartir").toString().equals("privado"))
+	        		aux.get("compartir").toString().equals("privado"))
 	        	continue;
 	        else if(!aux.get("username").toString().equalsIgnoreCase(username) && 
-	        		!aux.get("compartir").toString().equals("amigos"))
+	        		aux.get("compartir").toString().equals("amigos") && 
+	        		!user.isAmigo(aux.get("username").toString()))
 	        	continue;
 	        	
-	        List<String>els=(List<String>)aux.get("adjuntos");
 	        LinkedList<String> adjs=new LinkedList<String>();
-	        for(int i=0; i<els.size();i++) {
-	          adjs.add(els.get(i));
-	        }
 	        
 	        System.out.println(aux.get("mensaje").toString());
 	        System.out.println(aux.get("fecha").toString());

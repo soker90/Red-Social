@@ -19,8 +19,8 @@ public class DAOPublicacion {
 	public LinkedList<Publicacion> leerTodasPublicaciones() {
 		return db.readAllPublicaciones();
 	}
-	public LinkedList<Publicacion> leerTodasPublicacionesUser(String username) {
-		return db.readAllPublicacionesUser(username);
+	public LinkedList<Publicacion> leerTodasPublicacionesUser(Persona user) {
+		return db.readAllPublicacionesUser(user);
 	}
 	public boolean actualizaPublicacion(Publicacion antigua, Publicacion nueva) {
 		return db.updatePublicacion(antigua, nueva);
