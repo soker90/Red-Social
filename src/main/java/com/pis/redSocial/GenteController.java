@@ -88,16 +88,14 @@ public class GenteController {
 		ModelAndView miMAV = new ModelAndView("gente");
 		DAOPersona dao = new DAOPersona();
 
-		ArrayList<String> peticionesenviadas,peticiones;
-		ArrayList<String> peticionesaux =new ArrayList<String>();
+		ArrayList<String> peticionesRecibidas;
+		ArrayList<String> peticionesEnviadas;
 		
 		
 		String yo;
 		HttpSession session = request.getSession();
 		Persona user = (Persona) session.getAttribute("persona");
 		yo = user.getUsername();
-		peticionesenviadas = user.getPeticionesenviadas();
-		peticiones= user.getPeticiones();
 			
 		
 		
@@ -116,15 +114,20 @@ public class GenteController {
 			//el que la envia
 			String nombreUserPeticion=user.getUsername();
 			
-			peticionesaux.add(nombreUserPeticion);
-			peticionesenviadas.add(nombreUser);
+			peticionesRecibidas = p.getPeticiones();
+			peticionesRecibidas.add(nombreUserPeticion);
 			
-			p.setPeticiones(peticionesaux);
-			user.setPeticionesenviadas(peticionesenviadas);
+			peticionesEnviadas = user.getPeticionesenviadas();
+			peticionesEnviadas.add(nombreUser);
+			
+			p.setPeticiones(peticionesRecibidas);
+			user.setPeticionesenviadas(peticionesEnviadas);
+			System.out.println(user.getPassword());
 			dao.update(user);
 			dao.update(p);
-			user.decrypt();
-			p.decrypt();
+			System.out.println(user.getPassword());
+			/*user.decrypt();
+			p.decrypt();*/
 			miMAV.addObject("mensaje", "Has enviado la solicitud");
 			gente(request, response, model);
 			return miMAV;

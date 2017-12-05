@@ -74,7 +74,7 @@ public class RegisterController {
 		String gRecaptchaResponse = request
 				.getParameter("g-recaptcha-response");
 		System.out.println(gRecaptchaResponse);
-		boolean verify = VerifyCaptch.verify(gRecaptchaResponse);
+		//boolean verify = VerifyCaptch.verify(gRecaptchaResponse);
 		
 		if (dao.existeUsername(username)) {
 			miMAV.addObject("nombre", nombre);
@@ -127,7 +127,7 @@ public class RegisterController {
 						return miMAV;
 					}else{
 							//CREA USUARIO
-						if (verify) {
+						//if (verify) {
 							p = new Persona(nombre, apellidos, username, email, password, direccion, telefono, foto,
 									false, amigos,peticiones,peticionesenviadas);
 									p.setFecha(new Date());
@@ -136,13 +136,12 @@ public class RegisterController {
 							request.getSession().setAttribute("usernombre", p.getNombre());
 							return new ModelAndView("menu", "aviso", "Cuenta creada correctamente");
 							
-						} else
+						/*} else
 							miMAV.addObject("mensaje",
-									"Captcha erroneo.");
+									"Captcha erroneo.");*/
 					}
 				}
 			}
 		}
-		return miMAV;
 	}
 }

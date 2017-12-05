@@ -110,8 +110,8 @@ public class AmigosController {
 		usuarioAceptado.setPeticionesenviadas(peticionesEnviadasUsuarioAcep);
 		dao.update(user);
 		dao.update(usuarioAceptado);
-		user.decrypt();
-		usuarioAceptado.decrypt();
+		//user.decrypt();
+		//usuarioAceptado.decrypt();
 		miMAV.addObject("mensaje", "Ha aceptado al usuario");
 		amigos(request, model);
 		return miMAV;
@@ -143,8 +143,8 @@ public class AmigosController {
 		
 		dao.update(usuarioRechazado);
 		dao.update(user);
-		user.decrypt();
-		usuarioRechazado.decrypt();
+		//user.decrypt();
+		//usuarioRechazado.decrypt();
 		miMAV.addObject("mensaje", "No ha aceptado al usuario");
 		amigos(request, model);
 		return miMAV;
@@ -175,8 +175,8 @@ public class AmigosController {
 		
 		dao.update(usuarioEliminado);
 		dao.update(user);
-		user.decrypt();
-		usuarioEliminado.decrypt();
+		//user.decrypt();
+		//usuarioEliminado.decrypt();
 		miMAV.addObject("mensaje", "No ha aceptado al usuario");
 		amigos(request, model);
 		return miMAV;

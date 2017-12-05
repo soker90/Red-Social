@@ -36,19 +36,19 @@ public class DAOPersona {
 	}
 	
 	public boolean update(Persona p) throws Exception {
-		p.encrypt();
+		//p.encrypt();
 		return db.update(p);
 	}
 	
 	public Persona getPersona(String username) throws Exception {
 		Persona p= db.getPersona(username);
-		p.decrypt();
+		//p.decrypt();
 		return p;
 	}
 	
 	public Persona getPersonaByEmail(String email) throws Exception {
 		Persona p= db.getPersonaByEmail(email);
-		p.decrypt();
+		//p.decrypt();
 		return p;
 	}
 	
